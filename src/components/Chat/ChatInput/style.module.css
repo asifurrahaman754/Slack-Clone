@@ -1,0 +1,33 @@
+.ChatInput {
+  position: relative;
+  margin: 0px 20px;
+  z-index: -9;
+}
+
+.chat_inputField {
+  width: 100%;
+  border: 1px solid #c6c6c6;
+  padding: 18px 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+.chat_submit {
+  position: absolute;
+  right: -6px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  top: 50%;
+  color: gray;
+  font-size: 1.1rem;
+  padding: 7px 8px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-radius: 4px;
+}
+
+.chat_submit_active {
+  color: white;
+  background-color: #007a5a;
+}

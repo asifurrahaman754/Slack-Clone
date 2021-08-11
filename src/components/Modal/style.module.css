@@ -1,0 +1,97 @@
+.modal_bg_container {
+  position: absolute;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal_container {
+  max-width: 500px;
+  width: 95%;
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.modal_heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal_heading h1 {
+  font-size: 1.8rem;
+}
+
+.modal_heading .modal_close_btn {
+  cursor: pointer;
+  padding: 11px 13px;
+  border-radius: 7px;
+  color: var(--text_secondary);
+  display: flex;
+}
+
+.modal_heading .modal_close_btn:hover {
+  background: #f3f3f3;
+  color: black;
+}
+
+.about_modal {
+  margin: 20px 0px;
+  color: #444;
+}
+
+.modal_input_wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal_input_wrap label {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.modal_input_wrap label span {
+  font-weight: normal;
+  font-size: 0.95rem;
+}
+
+.modal_input_wrap input {
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #00000063;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.modal_input_wrap .about_description {
+  margin-top: -1rem;
+  font-size: 0.84rem;
+  color: #00000070;
+  font-weight: 500;
+}
+
+.modal_input_wrap .modal_submit {
+  margin: 20px 0px 0px auto;
+  width: 100px;
+  padding: 10px;
+  border: 1px solid #c6c6c6;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #333;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.modal_input_wrap .modal_submit:hover {
+  background-color: #dcdcdc;
+}
