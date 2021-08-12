@@ -47,14 +47,14 @@ export default function Chat({ roomDetails }) {
 
   return (
     <div className={s.chat_container}>
+      {chatLoading && <div className={s.loading}>Loading&#8230;</div>}
+
       <ChatHeader roomDetails={roomDetails} />
       <div data-simplebar className={s.chat_box}>
         <div>
           {!roomMessages.length && (
             <h4 className={s.no_msg}>There are no message in the room</h4>
           )}
-
-          {chatLoading && <div className={s.loading}>Loading&#8230;</div>}
 
           {roomMessages.map(({ id, user, userImage, message, timestamp }) => (
             <Message

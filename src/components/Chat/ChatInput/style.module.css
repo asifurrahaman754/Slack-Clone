@@ -1,7 +1,6 @@
 .ChatInput {
   position: relative;
   margin: 0px 20px;
-  z-index: -9;
 }
 
 .chat_inputField {
