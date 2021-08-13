@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "simplebar";
@@ -16,6 +16,12 @@ export default function Chat({ roomDetails }) {
   const [chatLoading, setchatLoading] = useState(false);
   const { channelId } = useParams();
   const dispatch = useDispatch();
+  const messagesEndRef = useRef(null);
+
+  //scrool to the bottom of the page
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView();
+  };
 
   useEffect(() => {
     setchatLoading(true);
@@ -39,17 +45,17 @@ export default function Chat({ roomDetails }) {
           id: doc.id,
           ...doc.data(),
         }));
-
         setroomMessages(messages);
         setchatLoading(false);
+        scrollToBottom();
       });
   }, [channelId]);
 
   return (
     <div className={s.chat_container}>
       {chatLoading && <div className={s.loading}>Loading&#8230;</div>}
-
       <ChatHeader roomDetails={roomDetails} />
+
       <div data-simplebar className={s.chat_box}>
         <div>
           {!roomMessages.length && (
@@ -65,8 +71,11 @@ export default function Chat({ roomDetails }) {
               timestamp={timestamp}
             />
           ))}
+
+          <div ref={messagesEndRef} />
         </div>
       </div>
+
       <ChatInput />
     </div>
   );
