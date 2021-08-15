@@ -63,8 +63,26 @@
   transform: translate(-50%, -50%);
 }
 
+.nav_help_wrap {
+  position: relative;
+  display: contents;
+}
+
 .nav_help_icon {
   margin-left: 1rem;
+}
+
+.help_description {
+  position: absolute;
+  max-width: 195px;
+  background: #fafafa;
+  border: 1px solid silver;
+  right: 50px;
+  top: 35px;
+  padding: 10px 10px;
+  z-index: 99;
+  color: #000000ab;
+  line-height: 1.4rem;
 }
 
 .header_user_wrap {
