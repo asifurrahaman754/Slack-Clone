@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import * as s from "./style.module.css";
 
 export default function SidebarOptions({
@@ -9,11 +10,17 @@ export default function SidebarOptions({
   onClick,
   showModal,
 }) {
+  const { name: activeChannel } = useSelector(
+    state => state.slackSlice.roomDetails
+  );
+
   return (
     <div
       id={id && id}
       onClick={onClick && onClick}
-      className={`${s.sidebar_option} ${classname}`}
+      className={`${s.sidebar_option} ${classname} ${
+        activeChannel === title && s.channel_active
+      }`}
     >
       <span className={s.sidebar_option_icon}>{Icon ? <Icon /> : "#"}</span>
       <span className={s.sidebar_option_title}>{title}</span>

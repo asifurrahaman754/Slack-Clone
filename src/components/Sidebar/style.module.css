@@ -1,5 +1,5 @@
 .sidebar_container {
-  max-width: 230px;
+  max-width: 250px;
   width: 100%;
   background: var(--primary_color);
   height: calc(100vh - 40px);
@@ -100,6 +100,10 @@
 
 .channel_list {
   margin-left: 1rem;
+}
+
+.channel_active {
+  color: white;
 }
 
 @media (max-width: 768px) {

@@ -17,9 +17,10 @@ export default function ChatInput() {
   const sendMessage = e => {
     e.preventDefault();
 
+    new Audio("/assets/message.mp3").play();
     db.collection("rooms").doc(channelId).collection("messages").add({
       message: inputValue,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      timestamp: new Date().toLocaleString(),
       user: user.name,
       userImage: user.image,
     });

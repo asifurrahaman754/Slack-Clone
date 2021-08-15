@@ -1,7 +1,6 @@
 import * as s from "./style.module.css";
 
 export default function Message({ user, userImage, message, timestamp }) {
-  console.log("Message render");
   return (
     <div className={s.message_wrap}>
       <img
@@ -16,7 +15,7 @@ export default function Message({ user, userImage, message, timestamp }) {
           {user}
 
           <span className={s.user_msg_time}>
-            {new Date(timestamp?.toDate()).toUTCString()}
+            {new Date(timestamp).toLocaleString()}
           </span>
         </h4>
         <p className={s.user_message}>{message}</p>
