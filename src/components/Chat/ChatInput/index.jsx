@@ -28,6 +28,8 @@ export default function ChatInput() {
       .add({
         message: inputValue,
         timestamp: dayjs().format("lll"),
+        //time is for sorting the message
+        time: dayjs().format("LTS"),
         user: user.name,
         userImage: user.image,
       });

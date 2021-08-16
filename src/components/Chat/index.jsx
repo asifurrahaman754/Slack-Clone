@@ -10,6 +10,7 @@ import Message from "./Message";
 import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import { setroomDetails } from "../../redux/ChatSlice";
+import { sortMessage } from "../../Utils";
 
 export default function Chat({ roomDetails }) {
   const [roomMessages, setroomMessages] = useState([]);
@@ -39,13 +40,13 @@ export default function Chat({ roomDetails }) {
     db.collection("rooms")
       .doc(channelId)
       .collection("messages")
-      .orderBy("timestamp", "asc")
       .onSnapshot(snapshot => {
         const messages = snapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setroomMessages(messages);
+        const sortedMessage = sortMessage(messages);
+        setroomMessages(sortedMessage);
         setchatLoading(false);
         scrollToBottom();
       });
@@ -58,7 +59,7 @@ export default function Chat({ roomDetails }) {
 
       <div data-simplebar className={s.chat_box}>
         <div>
-          {!roomMessages.length && (
+          {!roomMessages?.length && (
             <h4 className={s.no_msg}>There are no message in the room</h4>
           )}
 
