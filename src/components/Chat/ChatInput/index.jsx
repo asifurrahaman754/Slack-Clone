@@ -3,8 +3,9 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { IoSendSharp } from "react-icons/io5";
 import { useParams } from "react-router";
-import firebase from "firebase";
 import db from "../../../firebase";
+import LocalizedFormat from "dayjs/plugin/localizedFormat";
+import dayjs from "dayjs";
 
 import * as s from "./style.module.css";
 
@@ -14,16 +15,22 @@ export default function ChatInput() {
   const { roomDetails, user } = useSelector(state => state.slackSlice);
   const { channelId } = useParams();
 
+  //for extend the power of day.js library
+  dayjs.extend(LocalizedFormat);
+
   const sendMessage = e => {
     e.preventDefault();
 
     new Audio("/assets/message.mp3").play();
-    db.collection("rooms").doc(channelId).collection("messages").add({
-      message: inputValue,
-      timestamp: new Date().toLocaleString(),
-      user: user.name,
-      userImage: user.image,
-    });
+    db.collection("rooms")
+      .doc(channelId)
+      .collection("messages")
+      .add({
+        message: inputValue,
+        timestamp: dayjs().format("lll"),
+        user: user.name,
+        userImage: user.image,
+      });
 
     setinputValue("");
   };
