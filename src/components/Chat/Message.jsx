@@ -14,9 +14,7 @@ export default function Message({ user, userImage, message, timestamp }) {
         <h4>
           {user}
 
-          <span className={s.user_msg_time}>
-            {new Date(timestamp).toLocaleString()}
-          </span>
+          <span className={s.user_msg_time}>{timestamp}</span>
         </h4>
         <p className={s.user_message}>{message}</p>
       </div>
