@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import { useSelector } from "react-redux";
 import { IoSendSharp } from "react-icons/io5";
@@ -10,13 +10,17 @@ import dayjs from "dayjs";
 import * as s from "./style.module.css";
 
 export default function ChatInput() {
-  console.log("chatInput render");
   const [inputValue, setinputValue] = useState("");
+  const inputRef = useRef(null);
   const { roomDetails, user } = useSelector(state => state.slackSlice);
   const { channelId } = useParams();
 
   //for extend the power of day.js library
   dayjs.extend(LocalizedFormat);
+
+  const setInputValue = () => {
+    setinputValue(inputRef.current.textContent);
+  };
 
   const sendMessage = e => {
     e.preventDefault();
@@ -34,22 +38,29 @@ export default function ChatInput() {
         userImage: user.image,
       });
 
+    inputRef.current.textContent = "";
     setinputValue("");
   };
 
   return (
     <div className={s.ChatInput}>
       <form onSubmit={sendMessage} className={s.input_wrap}>
-        <input
-          placeholder={`Message #${roomDetails.name}`}
-          onChange={e => setinputValue(e.target.value)}
-          name="message"
-          type="text"
+        {!inputValue && (
+          <span className={s.input_placeholder}>
+            Message #{roomDetails.name}
+          </span>
+        )}
+        <div
+          ref={inputRef}
+          onInput={setInputValue}
           className={s.chat_inputField}
-          required
-          value={inputValue}
-        />
+          id="input"
+          contentEditable
+          suppressContentEditableWarning={true}
+        ></div>
+
         <button
+          disabled={inputValue ? false : true}
           type="submit"
           className={`${s.chat_submit} ${inputValue && s.chat_submit_active}`}
         >

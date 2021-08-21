@@ -1,4 +1,6 @@
 export const sortMessage = arr => {
-  let sortedMessage = arr.sort((a, b) => a.time.localeCompare(b.time));
+  let sortedMessage = arr.sort((a, b) => {
+    return new Date(a.timestamp) - new Date(b.timestamp);
+  });
   return sortedMessage;
 };

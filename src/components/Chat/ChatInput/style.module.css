@@ -3,12 +3,30 @@
   margin: 0px 20px;
 }
 
+.input_placeholder {
+  position: absolute;
+  top: 50%;
+  transform: translate(0%, -50%);
+  left: 11px;
+}
+
 .chat_inputField {
   width: 100%;
-  border: 1px solid #c6c6c6;
-  padding: 18px 10px;
+  border: 1px solid #0000005c;
+  padding: 18px 50px 18px 10px;
   font-size: 1rem;
+  max-height: 60px;
   border-radius: 5px;
+  overflow-y: scroll;
+}
+
+/* for hiding the scrollbar in the input field */
+.chat_inputField {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.chat_inputField::-webkit-scrollbar {
+  display: none;
 }
 
 .chat_submit {
