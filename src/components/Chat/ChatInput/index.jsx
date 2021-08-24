@@ -3,11 +3,12 @@ import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { IoSendSharp } from "react-icons/io5";
 import { useParams } from "react-router";
-import db from "../../../firebase";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import dayjs from "dayjs";
+import firebase from "firebase";
 
 import * as s from "./style.module.css";
+import db from "../../../firebase";
 
 export default function ChatInput() {
   const [inputValue, setinputValue] = useState("");
@@ -31,7 +32,7 @@ export default function ChatInput() {
       .collection("messages")
       .add({
         message: inputValue,
-        timestamp: dayjs().format("lll"),
+        timestamp: dayjs().format("L LTS"),
         user: user.name,
         userImage: user.image,
       });

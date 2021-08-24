@@ -3,14 +3,44 @@ import { useSelector } from "react-redux";
 
 import { BiTime } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
+import { HiOutlineDocumentSearch } from "react-icons/hi";
 import { MdAccountBox } from "react-icons/md";
 import { BsQuestionCircle } from "react-icons/bs";
+import "simplebar";
+import "simplebar/dist/simplebar.css";
 import * as s from "./style.module.css";
-import { truncate } from "fs";
+import { useHistory } from "react-router-dom";
 
 export default function Header() {
-  const user = useSelector(state => state.slackSlice.user);
+  const [searchInput, setsearchInput] = useState("");
+  const [searchResult, setsearchResult] = useState([]);
   const [hdHidden, sethdHidden] = useState(true);
+  const { user, rooms } = useSelector(state => state.slackSlice);
+  const history = useHistory();
+
+  //when user change in search
+  const handleChange = e => {
+    const searchValue = e.target.value;
+    setsearchInput(searchValue);
+
+    let searchResultArr = [];
+    //if the search value matches the existing rooms then push them in the array
+    rooms.forEach(room => {
+      if (room.name.toLowerCase().startsWith(searchValue.toLowerCase())) {
+        searchResultArr.push(room);
+      }
+    });
+
+    setsearchResult(searchResultArr);
+  };
+
+  //when user clicks on the search result list item
+  const handleClick = e => {
+    const clickedChannelId = e.target.id;
+    history.push(`/room/${clickedChannelId}`);
+
+    setsearchInput("");
+  };
 
   return (
     <header className={s.header_section}>
@@ -21,14 +51,41 @@ export default function Header() {
 
         <div className={s.nav_search_wrap}>
           <input
+            onInput={handleChange}
             placeholder="Search #Rooms"
             type="search"
             name="search"
+            value={searchInput}
             className={s.nav_search_input}
           />
           <span className={s.nav_search_icon}>
             <FiSearch />
           </span>
+
+          {searchInput && (
+            <div className={s.search_result_container}>
+              <h3 className={s.search_result_header}>
+                <span>
+                  <HiOutlineDocumentSearch />
+                </span>
+                Searching for {searchInput}
+              </h3>
+
+              <ul data-simplebar className={s.search_result_list_wrap}>
+                <div>
+                  {searchResult.length ? (
+                    searchResult.map(room => (
+                      <li onClick={handleClick} id={room.id} key={room.id}>
+                        # {room.name}
+                      </li>
+                    ))
+                  ) : (
+                    <h4>No result found</h4>
+                  )}
+                </div>
+              </ul>
+            </div>
+          )}
         </div>
 
         <div className={s.nav_help_wrap}>

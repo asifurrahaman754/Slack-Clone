@@ -1,6 +1,6 @@
 export const sortMessage = arr => {
-  let sortedMessage = arr.sort((a, b) => {
-    return new Date(a.timestamp) - new Date(b.timestamp);
-  });
+  let sortedMessage = arr.sort(
+    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+  );
   return sortedMessage;
 };

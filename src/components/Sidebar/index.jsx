@@ -19,19 +19,22 @@ import "simplebar/dist/simplebar.css";
 
 import SidebarOptions from "./SidebarOptions";
 import db from "../../firebase";
-import { setshowChannelModal, setshowSidebar } from "../../redux/ChatSlice";
+import {
+  setRooms,
+  setshowChannelModal,
+  setshowSidebar,
+} from "../../redux/ChatSlice";
 import * as s from "./style.module.css";
 
 function Sidebar() {
   console.log("Sidebar render");
   const [toggleshowOptions, settoggleshowOptions] = useState(false);
   const [showChannels, setshowChannels] = useState(true);
-  const [channels, setchannels] = useState([]);
   const wrapperRef = useRef(null);
   const history = useHistory();
 
   const dispatch = useDispatch();
-  const { showSidebar, showChannelModal, user } = useSelector(
+  const { showSidebar, showChannelModal, user, rooms } = useSelector(
     state => state.slackSlice
   );
 
@@ -80,7 +83,7 @@ function Sidebar() {
         name: doc.data().name,
       }));
 
-      setchannels(data);
+      dispatch(setRooms(data));
     });
   }, []);
 
@@ -129,7 +132,7 @@ function Sidebar() {
 
           {showChannels && (
             <div className={s.channel_list}>
-              {channels.map(channel => (
+              {rooms.map(channel => (
                 <SidebarOptions
                   onClick={handleChannelClick}
                   id={channel.id}

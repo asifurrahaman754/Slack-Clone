@@ -103,6 +103,12 @@
 }
 
 .channel_active {
+  background: #1264a3;
+  color: white;
+}
+
+.channel_active:hover {
+  background: #1264a3 !important;
   color: white;
 }
 
