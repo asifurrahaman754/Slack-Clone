@@ -52,6 +52,7 @@ export default function Header() {
         <div className={s.nav_search_wrap}>
           <input
             onInput={handleChange}
+            maxLength="20"
             placeholder="Search #Rooms"
             type="search"
             name="search"
@@ -61,31 +62,6 @@ export default function Header() {
           <span className={s.nav_search_icon}>
             <FiSearch />
           </span>
-
-          {searchInput && (
-            <div className={s.search_result_container}>
-              <h3 className={s.search_result_header}>
-                <span>
-                  <HiOutlineDocumentSearch />
-                </span>
-                Searching for {searchInput}
-              </h3>
-
-              <ul data-simplebar className={s.search_result_list_wrap}>
-                <div>
-                  {searchResult.length ? (
-                    searchResult.map(room => (
-                      <li onClick={handleClick} id={room.id} key={room.id}>
-                        # {room.name}
-                      </li>
-                    ))
-                  ) : (
-                    <h4>No result found</h4>
-                  )}
-                </div>
-              </ul>
-            </div>
-          )}
         </div>
 
         <div className={s.nav_help_wrap}>
@@ -105,6 +81,31 @@ export default function Header() {
           </p>
         </div>
       </nav>
+
+      {searchInput && (
+        <div className={s.search_result_container}>
+          <h3 className={s.search_result_header}>
+            <span>
+              <HiOutlineDocumentSearch />
+            </span>
+            Searching for {searchInput}
+          </h3>
+
+          <ul data-simplebar className={s.search_result_list_wrap}>
+            <div>
+              {searchResult.length ? (
+                searchResult.map(room => (
+                  <li onClick={handleClick} id={room.id} key={room.id}>
+                    # {room.name}
+                  </li>
+                ))
+              ) : (
+                <h4>No result found</h4>
+              )}
+            </div>
+          </ul>
+        </div>
+      )}
 
       <div className={s.header_user_wrap}>
         {user?.image ? (

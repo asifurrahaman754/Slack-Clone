@@ -54,21 +54,37 @@
   border: none;
 }
 
+.nav_search_wrap .nav_search_input::placeholder {
+  color: #ffffffad;
+}
+.nav_search_wrap .nav_search_input::-webkit-input-placeholder {
+  color: #ffffffad;
+}
+.nav_search_wrap .nav_search_input::-moz-placeholder {
+  color: #ffffffad;
+}
+.nav_search_wrap .nav_search_input:-ms-input-placeholder {
+  color: #ffffffad;
+}
+
 .nav_search_wrap .nav_search_icon {
   position: absolute;
   top: 50%;
   right: 0;
   transform: translate(-50%, -50%);
+  color: #ffffffad;
 }
 
 .search_result_container {
   position: absolute;
   background: #f8f8f8;
   color: #282626;
-  width: 100%;
+  width: 95%;
   border-radius: 6px;
   z-index: 99;
   box-shadow: 10px 13px 15px -14px #00000040;
+  top: var(--nav_height);
+  max-width: 700px;
 }
 
 .search_result_container .search_result_header {
