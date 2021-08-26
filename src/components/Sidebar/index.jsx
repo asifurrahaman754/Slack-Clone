@@ -144,6 +144,7 @@ function Sidebar() {
                 onClick={showModal}
                 title="Add channel"
                 Icon={AiOutlinePlus}
+                addIconStyle={s.addIcon_Style}
               />
             </div>
           )}

@@ -9,6 +9,7 @@ export default function SidebarOptions({
   Icon2,
   onClick,
   showModal,
+  addIconStyle,
 }) {
   const { name: activeChannel } = useSelector(
     state => state.slackSlice.roomDetails
@@ -22,7 +23,11 @@ export default function SidebarOptions({
         activeChannel === title && s.channel_active
       }`}
     >
-      <span className={s.sidebar_option_icon}>{Icon ? <Icon /> : "#"}</span>
+      <span
+        className={`${s.sidebar_option_icon} ${addIconStyle && addIconStyle}`}
+      >
+        {Icon ? <Icon /> : "#"}
+      </span>
       <span className={s.sidebar_option_title}>{title}</span>
 
       {Icon2 && (

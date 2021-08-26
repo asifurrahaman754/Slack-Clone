@@ -1,16 +1,16 @@
 import { useRef } from "react";
 
 import { GrClose } from "react-icons/gr";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import * as s from "./style.module.css";
 import { setshowChannelModal } from "../../redux/ChatSlice";
 import db from "../../firebase";
 
 export default function Modal() {
-  console.log("modal render");
   const nameRef = useRef(null);
   const desRef = useRef(null);
+  const rooms = useSelector(state => state.slackSlice.rooms);
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
@@ -18,7 +18,15 @@ export default function Modal() {
     const name = nameRef.current.value;
     const description = desRef.current.value;
 
-    //take the user input and store it in firebase store
+    //check if the room is already exists
+    for (let i = 0; i < rooms.length; i++) {
+      if (rooms[i].name === name) {
+        alert("Room already exist with this name, try a different name.");
+        return;
+      }
+    }
+
+    //if it is a new room store it in firebase store
     db.collection("rooms").add({ name, description });
     closeModal();
   };

@@ -102,6 +102,12 @@
   margin-left: 1rem;
 }
 
+.addIcon_Style {
+  padding: 4px;
+  border-radius: 5px;
+  background: #472248;
+}
+
 .channel_active {
   background: #1264a3;
   color: white;
