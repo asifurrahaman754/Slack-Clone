@@ -21,7 +21,7 @@ export default function Chat({ roomDetails }) {
 
   //scrool to the bottom of the page
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView();
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {

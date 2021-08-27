@@ -5,7 +5,6 @@ import { IoSendSharp } from "react-icons/io5";
 import { useParams } from "react-router";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
 import dayjs from "dayjs";
-import firebase from "firebase";
 
 import * as s from "./style.module.css";
 import db from "../../../firebase";
@@ -41,6 +40,17 @@ export default function ChatInput() {
     setinputValue("");
   };
 
+  //when user press enter, send the message as well
+  const checkEnterClick = e => {
+    if (e.key === "Enter") {
+      if (!inputValue) {
+        e.preventDefault();
+      } else {
+        sendMessage(e);
+      }
+    }
+  };
+
   return (
     <div className={s.ChatInput}>
       <form onSubmit={sendMessage} className={s.input_wrap}>
@@ -51,6 +61,7 @@ export default function ChatInput() {
         )}
         <div
           ref={inputRef}
+          onKeyPress={checkEnterClick}
           onInput={setInputValue}
           className={s.chat_inputField}
           id="input"

@@ -165,6 +165,7 @@
   width: 30px;
   height: 30px;
   position: relative;
+  cursor: pointer;
 }
 
 .user_profile_img img {
@@ -184,4 +185,21 @@
   bottom: 0;
   border-radius: 50px;
   right: 0;
+}
+
+.sign_out {
+  background: #1264a3;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: var(--nav_height);
+  transition: all 0.2s;
+}
+
+.sign_out:hover {
+  background-color: #0e5184;
 }

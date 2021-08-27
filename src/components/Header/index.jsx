@@ -10,11 +10,13 @@ import "simplebar";
 import "simplebar/dist/simplebar.css";
 import * as s from "./style.module.css";
 import { useHistory } from "react-router-dom";
+import { auth } from "../../firebase";
 
 export default function Header() {
   const [searchInput, setsearchInput] = useState("");
   const [searchResult, setsearchResult] = useState([]);
   const [hdHidden, sethdHidden] = useState(true);
+  const [signouthide, setsignouthide] = useState(true);
   const { user, rooms } = useSelector(state => state.slackSlice);
   const history = useHistory();
 
@@ -40,6 +42,10 @@ export default function Header() {
     history.push(`/room/${clickedChannelId}`);
 
     setsearchInput("");
+  };
+
+  const handleSignout = () => {
+    auth.signOut();
   };
 
   return (
@@ -109,14 +115,28 @@ export default function Header() {
 
       <div className={s.header_user_wrap}>
         {user?.image ? (
-          <div className={s.user_profile_img}>
-            <img src={user?.image} alt="user profile image" />
+          <div
+            onClick={() => setsignouthide(!signouthide)}
+            className={s.user_profile_img}
+          >
+            <img src={user?.image} alt="user profile " />
           </div>
         ) : (
-          <span className={s.user_icon}>
+          <span
+            onClick={() => setsignouthide(!signouthide)}
+            className={s.user_icon}
+          >
             <MdAccountBox />
           </span>
         )}
+
+        <button
+          style={{ display: signouthide ? "none" : "block" }}
+          onClick={handleSignout}
+          className={s.sign_out}
+        >
+          sign out
+        </button>
       </div>
     </header>
   );

@@ -7,7 +7,7 @@ export default function Message({ user, userImage, message, timestamp }) {
         loading="lazy"
         className={s.chat_user_image}
         src={userImage}
-        alt="user image"
+        alt="user"
       />
 
       <div className={s.message_info}>
