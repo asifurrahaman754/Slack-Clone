@@ -63,15 +63,19 @@ export default function Chat({ roomDetails }) {
             <h4 className={s.no_msg}>There are no message in the room</h4>
           )}
 
-          {roomMessages.map(({ id, user, userImage, message, timestamp }) => (
-            <Message
-              key={id}
-              user={user}
-              userImage={userImage}
-              message={message}
-              timestamp={timestamp}
-            />
-          ))}
+          {roomMessages.map(
+            ({ id, user, createdUserId, userImage, message, timestamp }) => (
+              <Message
+                key={id}
+                id={id}
+                createdUserId={createdUserId}
+                user={user}
+                userImage={userImage}
+                message={message}
+                timestamp={timestamp}
+              />
+            )
+          )}
 
           <div ref={messagesEndRef} />
         </div>

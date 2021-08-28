@@ -191,31 +191,6 @@
   width: 100%;
   height: calc(100vh - 170px);
 }
-
-.message_wrap {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.chat_user_image {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  border-radius: 5px;
-  margin-bottom: auto;
-}
-
-.message_info {
-  margin-left: 1rem;
-}
-
-.message_info .user_msg_time {
-  color: gray;
-  font-weight: 600;
-  margin-left: 10px;
-  font-size: 13px;
-}
 /* chat style */
 
 @media (min-width: 768px) {

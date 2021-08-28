@@ -1,0 +1,64 @@
+.message_wrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.chat_user_image {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 5px;
+  margin-bottom: auto;
+}
+
+.message_info {
+  margin-left: 1rem;
+}
+
+.message_info .user_msg_time {
+  color: gray;
+  font-weight: 600;
+  margin-left: 10px;
+  font-size: 13px;
+}
+
+.message_options_icon {
+  margin-left: auto;
+  margin-bottom: auto;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: none;
+}
+
+.message_wrap:hover .message_options_icon {
+  display: block;
+}
+
+/* message option style */
+.message_options_wrap {
+  position: absolute;
+  right: 0px;
+  top: 25px;
+  list-style: none;
+  background: #f8f8f8;
+  font-size: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 6px 12px;
+  box-shadow: 4px 3px 10px -2px rgba(0, 0, 0, 0.12);
+}
+
+.message_options_wrap li {
+  cursor: pointer;
+}
+
+.message_option_delete {
+  color: #e01e5a;
+}
+
+.message_option_delete_disable {
+  opacity: 0.6;
+  pointer-events: none;
+}

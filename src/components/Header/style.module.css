@@ -19,7 +19,7 @@
 .header_nav .nav_history_icon,
 .nav_help_icon {
   display: flex;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   transition: all 0.2s;
   cursor: pointer;
   padding: 4px;
@@ -94,6 +94,7 @@
   padding: 15px 25px;
   border-bottom: 1.5px solid #d0d0d0;
   font-weight: 600;
+  overflow: hidden;
 }
 
 .search_result_list_wrap {

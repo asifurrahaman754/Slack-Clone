@@ -5,7 +5,7 @@ import { BiTime } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
 import { HiOutlineDocumentSearch } from "react-icons/hi";
 import { MdAccountBox } from "react-icons/md";
-import { BsQuestionCircle } from "react-icons/bs";
+import { RiQuestionLine } from "react-icons/ri";
 import "simplebar";
 import "simplebar/dist/simplebar.css";
 import * as s from "./style.module.css";
@@ -75,7 +75,7 @@ export default function Header() {
             onClick={() => sethdHidden(!hdHidden)}
             className={s.nav_help_icon}
           >
-            <BsQuestionCircle />
+            <RiQuestionLine />
           </span>
 
           <p

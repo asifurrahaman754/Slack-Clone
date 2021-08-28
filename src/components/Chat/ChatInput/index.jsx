@@ -30,6 +30,7 @@ export default function ChatInput() {
       .doc(channelId)
       .collection("messages")
       .add({
+        createdUserId: user.id,
         message: inputValue,
         timestamp: dayjs().format("L LTS"),
         user: user.name,
