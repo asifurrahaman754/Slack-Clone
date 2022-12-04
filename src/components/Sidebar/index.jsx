@@ -1,33 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 
-import { BsPencilSquare, BsBookmark, BsPeopleFill } from "react-icons/bs";
-import { CgComment } from "react-icons/cg";
+import { BsPencilSquare } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
-import { RiFileCopy2Line } from "react-icons/ri";
 import { IoMdArrowDropleft, IoMdArrowDropdown } from "react-icons/io";
-import {
-  MdMoveToInbox,
-  MdDrafts,
-  MdApps,
-  MdExpandLess,
-  MdExpandMore,
-} from "react-icons/md";
+import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "simplebar";
+import sidebarOptions from "data/SidebarOptions.js";
 import "simplebar/dist/simplebar.css";
+import dayjs from "dayjs";
 
-import SidebarOptions from "./SidebarOptions";
+import SidebarItem from "./SidebarItem";
 import db from "../../firebase";
-import {
-  setRooms,
-  setshowChannelModal,
-  setshowSidebar,
-} from "../../redux/ChatSlice";
+import { setRooms, setshowChannelModal, setshowSidebar } from "redux/ChatSlice";
 import * as s from "./style.module.css";
 
 function Sidebar() {
-  console.log("Sidebar render");
   const [toggleshowOptions, settoggleshowOptions] = useState(false);
   const [showChannels, setshowChannels] = useState(true);
   const wrapperRef = useRef(null);
@@ -35,7 +24,7 @@ function Sidebar() {
 
   const dispatch = useDispatch();
   const { showSidebar, showChannelModal, user, rooms } = useSelector(
-    state => state.slackSlice
+    (state) => state.slackSlice
   );
 
   //close the sidebar whenever clicking outside of the sidebar
@@ -51,18 +40,50 @@ function Sidebar() {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [showSidebar, showChannelModal]);
+  }, [showSidebar, showChannelModal, dispatch]);
 
   //update the channel-chat info when user clicks on a channel
-  const handleChannelClick = e => {
-    const el = e.target.localName === "div" ? e.target : e.target.parentNode;
-    history.push(`/room/${el.id}`);
-
+  const handleChannelClick = (e) => {
+    history.push(`/room/${e.target.id}`);
     //hide the sidebar in mobile viewport
     dispatch(setshowSidebar(false));
+    updateHistory(e.target);
   };
 
-  const toggleShowChannel = e => {
+  const updateHistory = (targetEl) => {
+    const { innerText, id } = targetEl;
+    let updatedHistory;
+
+    //check if the history is already in the local storage
+    const history = JSON.parse(localStorage.getItem("history")) || [];
+    const isChannelInHistory = history.find((channel) => channel.id === id);
+
+    //if the channel is not in the history, add it to the history
+    if (!isChannelInHistory) {
+      const newHistory = [
+        { id, channel: innerText, time: dayjs().format("ll LT") },
+        ...history,
+      ];
+      updatedHistory = newHistory;
+    } else if (isChannelInHistory) {
+      //if it is in the history, move it to the top of the history
+      const otherHistoryItems = history.filter((channel) => channel.id !== id);
+      const newHistory = [
+        { id, channel: innerText, time: dayjs().format("ll LT") },
+        ...otherHistoryItems,
+      ];
+      updatedHistory = newHistory;
+    }
+
+    //if the history is more than 4, remove the last one
+    if (updatedHistory.length > 4) {
+      updatedHistory.pop();
+    }
+
+    localStorage.setItem("history", JSON.stringify(updatedHistory));
+  };
+
+  const toggleShowChannel = (e) => {
     //check if the user clicked on the add_new_channel button
     const isPlusBtn =
       e.target.hasAttribute("data-title") ||
@@ -71,21 +92,21 @@ function Sidebar() {
     !isPlusBtn && setshowChannels(!showChannels);
   };
 
-  const showModal = e => {
+  const showModal = (e) => {
     dispatch(setshowChannelModal(true));
   };
 
   //fetch all the rooms/channels from firebase store;
   useEffect(() => {
-    db.collection("rooms").onSnapshot(snapshot => {
-      const data = snapshot.docs.map(doc => ({
+    db.collection("rooms").onSnapshot((snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
         id: doc.id,
         name: doc.data().name,
       }));
 
       dispatch(setRooms(data));
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div
@@ -103,47 +124,42 @@ function Sidebar() {
         <div>
           {toggleshowOptions && (
             <>
-              <SidebarOptions title="Threads" Icon={CgComment} />
-              <SidebarOptions
-                title="Mentions & reactions"
-                Icon={MdMoveToInbox}
-              />
-              <SidebarOptions title="Saved items" Icon={MdDrafts} />
-              <SidebarOptions title="Channel browser" Icon={BsBookmark} />
-              <SidebarOptions title="People & user group" Icon={BsPeopleFill} />
-              <SidebarOptions title="Apps" Icon={MdApps} />
-              <SidebarOptions title="FIle browser" Icon={RiFileCopy2Line} />
+              {sidebarOptions.map(({ id, title, Icon }) => (
+                <SidebarItem key={id} title={title}>
+                  {Icon}
+                </SidebarItem>
+              ))}
             </>
           )}
-          <SidebarOptions
+          <SidebarItem
             onClick={() => settoggleshowOptions(!toggleshowOptions)}
             title={`show ${toggleshowOptions ? "less" : "more"}`}
-            Icon={toggleshowOptions ? MdExpandLess : MdExpandMore}
+            Icon={toggleshowOptions ? <MdExpandLess /> : <MdExpandMore />}
           />
 
-          <SidebarOptions
+          <SidebarItem
             onClick={toggleShowChannel}
             classname={s.channels}
             title="Channels"
-            Icon={showChannels ? IoMdArrowDropdown : IoMdArrowDropleft}
+            Icon={showChannels ? <IoMdArrowDropdown /> : <IoMdArrowDropleft />}
             Icon2={AiOutlinePlus}
             showModal={showModal}
           />
 
           {showChannels && (
             <div className={s.channel_list}>
-              {rooms.map(channel => (
-                <SidebarOptions
+              {rooms.map((channel) => (
+                <SidebarItem
                   onClick={handleChannelClick}
                   id={channel.id}
                   title={channel.name}
                   key={channel.id}
                 />
               ))}
-              <SidebarOptions
+              <SidebarItem
                 onClick={showModal}
                 title="Add channel"
-                Icon={AiOutlinePlus}
+                Icon={<AiOutlinePlus />}
                 addIconStyle={s.addIcon_Style}
               />
             </div>

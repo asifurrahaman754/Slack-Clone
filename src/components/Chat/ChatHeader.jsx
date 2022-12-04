@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { setshowSidebar } from "../../redux/ChatSlice";
+import { setshowSidebar } from "redux/ChatSlice";
 import { BsWindow } from "react-icons/bs";
 import * as s from "./style.module.css";
 
 export default function ChatHeader() {
-  console.log("ChatHeader render");
-  const roomDetails = useSelector(state => state.slackSlice.roomDetails);
+  const roomDetails = useSelector((state) => state.slackSlice.roomDetails);
   const dispatch = useDispatch();
 
   return (

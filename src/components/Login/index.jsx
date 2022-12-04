@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 
 import { auth, provider } from "../../firebase";
-import { setuser } from "../../redux/ChatSlice";
+import { setuser } from "redux/ChatSlice";
 import * as s from "./style.module.css";
 
 export default function Login() {
@@ -19,7 +19,7 @@ export default function Login() {
           })
         )
       )
-      .catch(err => alert(err.message));
+      .catch((err) => alert(err.message));
   };
 
   return (

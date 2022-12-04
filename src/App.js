@@ -3,25 +3,20 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import Chat from "./components/Chat";
-import Modal from "./components/Modal";
-import Login from "./components/Login";
-import Welcome from "./components/Welcome";
+import { Header, Sidebar, Chat, Modal, Login, Welcome } from "components";
 import { auth } from "./firebase";
-import { setuser } from "./redux/ChatSlice";
+import { setuser } from "redux/ChatSlice";
 
 function App() {
   const showChannelModal = useSelector(
-    state => state.slackSlice.showChannelModal
+    (state) => state.slackSlice.showChannelModal
   );
-  const user = useSelector(state => state.slackSlice.user);
+  const user = useSelector((state) => state.slackSlice.user);
   const dispatch = useDispatch();
 
   //retrive the user if a user already exits
   useEffect(() => {
-    auth.onAuthStateChanged(user => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         dispatch(
           setuser({
@@ -34,7 +29,7 @@ function App() {
         dispatch(setuser(null));
       }
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

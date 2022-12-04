@@ -1,7 +1,9 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 
 var firebaseConfig = {
-  apiKey: "AIzaSyCca4gyPdEl_dgsNdSuzlq3lWY1kaJhi-g",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "slack-clone-c9ae8.firebaseapp.com",
   projectId: "slack-clone-c9ae8",
   storageBucket: "slack-clone-c9ae8.appspot.com",

@@ -11,23 +11,25 @@ import "simplebar/dist/simplebar.css";
 import * as s from "./style.module.css";
 import { useHistory } from "react-router-dom";
 import { auth } from "../../firebase";
+import History from "./History";
 
 export default function Header() {
   const [searchInput, setsearchInput] = useState("");
   const [searchResult, setsearchResult] = useState([]);
   const [hdHidden, sethdHidden] = useState(true);
   const [signouthide, setsignouthide] = useState(true);
-  const { user, rooms } = useSelector(state => state.slackSlice);
+  const [showHistory, setshowHistory] = useState(false);
+  const { user, rooms } = useSelector((state) => state.slackSlice);
   const history = useHistory();
 
   //when user change in search
-  const handleChange = e => {
+  const handleChange = (e) => {
     const searchValue = e.target.value;
     setsearchInput(searchValue);
 
     let searchResultArr = [];
     //if the search value matches the existing rooms then push them in the array
-    rooms.forEach(room => {
+    rooms.forEach((room) => {
       if (room.name.toLowerCase().startsWith(searchValue.toLowerCase())) {
         searchResultArr.push(room);
       }
@@ -37,7 +39,7 @@ export default function Header() {
   };
 
   //when user clicks on the search result list item
-  const handleClick = e => {
+  const handleClick = (e) => {
     const clickedChannelId = e.target.id;
     history.push(`/room/${clickedChannelId}`);
 
@@ -48,12 +50,23 @@ export default function Header() {
     auth.signOut();
   };
 
+  function handleStateToggles(setStateChange, state) {
+    setStateChange(!state);
+  }
+
   return (
     <header className={s.header_section}>
       <nav className={s.header_nav}>
-        <span className={s.nav_history_icon}>
-          <BiTime />
-        </span>
+        <div className={s.nav_history}>
+          <span
+            title="Room History"
+            className={s.nav_history_icon}
+            onClick={() => handleStateToggles(setshowHistory, showHistory)}
+          >
+            <BiTime />
+          </span>
+          {showHistory && <History setshowHistory={setshowHistory} />}
+        </div>
 
         <div className={s.nav_search_wrap}>
           <input
@@ -72,7 +85,7 @@ export default function Header() {
 
         <div className={s.nav_help_wrap}>
           <span
-            onClick={() => sethdHidden(!hdHidden)}
+            onClick={() => handleStateToggles(sethdHidden, hdHidden)}
             className={s.nav_help_icon}
           >
             <RiQuestionLine />
@@ -100,7 +113,7 @@ export default function Header() {
           <ul data-simplebar className={s.search_result_list_wrap}>
             <div>
               {searchResult.length ? (
-                searchResult.map(room => (
+                searchResult.map((room) => (
                   <li onClick={handleClick} id={room.id} key={room.id}>
                     # {room.name}
                   </li>
@@ -116,14 +129,14 @@ export default function Header() {
       <div className={s.header_user_wrap}>
         {user?.image ? (
           <div
-            onClick={() => setsignouthide(!signouthide)}
+            onClick={() => handleStateToggles(setsignouthide, signouthide)}
             className={s.user_profile_img}
           >
             <img src={user?.image} alt="user profile " />
           </div>
         ) : (
           <span
-            onClick={() => setsignouthide(!signouthide)}
+            onClick={() => handleStateToggles(setsignouthide, signouthide)}
             className={s.user_icon}
           >
             <MdAccountBox />

@@ -52,7 +52,7 @@ export default function Message({
 }
 
 function MessageOptions({ showmsgOpList, messageId, createdUserId }) {
-  const user = useSelector(state => state.slackSlice.user);
+  const user = useSelector((state) => state.slackSlice.user);
   const { channelId } = useParams();
 
   //check if the loged-in user id matches with the message id

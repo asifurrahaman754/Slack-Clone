@@ -4,7 +4,6 @@ import * as s from "./style.module.css";
 import { setshowSidebar } from "../../redux/ChatSlice";
 
 export default function Welcome() {
-  console.log("Welcome render");
   const dispatch = useDispatch();
   return (
     <div className={s.welcome_container}>

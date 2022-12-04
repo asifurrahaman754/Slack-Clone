@@ -32,8 +32,51 @@
   background: rgb(73, 37, 74);
 }
 
-.nav_history_icon {
+.nav_history {
   margin-right: 1rem;
+  position: relative;
+}
+
+.nav_history .history_wrapper {
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  background: white;
+  padding: 10px 0px;
+  width: auto;
+  max-width: 250px;
+  overflow-x: auto;
+  max-height: 200px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.history_wrapper .history_item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.8rem;
+  justify-content: space-between;
+  color: black;
+  padding: 10px 15px;
+  white-space: nowrap;
+}
+
+.history_item:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.history_item:hover {
+  background: #1264a3;
+  color: white;
+  cursor: pointer;
+}
+
+.history_item_time {
+  font-size: 0.65rem;
+  opacity: 0.8;
+  font-weight: 700;
 }
 
 .nav_search_wrap {

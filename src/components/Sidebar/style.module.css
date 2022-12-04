@@ -66,12 +66,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .sidebar_option_icon {
   margin-right: 0.5rem;
   display: flex;
   font-size: 1.1rem;
+  pointer-events: none;
 }
 
 .sidebar_option_icon2 {

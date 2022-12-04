@@ -4,16 +4,16 @@ import { GrClose } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 
 import * as s from "./style.module.css";
-import { setshowChannelModal } from "../../redux/ChatSlice";
+import { setshowChannelModal } from "redux/ChatSlice";
 import db from "../../firebase";
 
 export default function Modal() {
   const nameRef = useRef(null);
   const desRef = useRef(null);
-  const rooms = useSelector(state => state.slackSlice.rooms);
+  const rooms = useSelector((state) => state.slackSlice.rooms);
   const dispatch = useDispatch();
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const name = nameRef.current.value;
     const description = desRef.current.value;
@@ -31,7 +31,7 @@ export default function Modal() {
     closeModal();
   };
 
-  const closeModal = e => {
+  const closeModal = (e) => {
     dispatch(setshowChannelModal(false));
   };
 

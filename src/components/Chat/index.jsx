@@ -5,12 +5,12 @@ import "simplebar";
 import "simplebar/dist/simplebar.css";
 
 import db from "../../firebase";
-import * as s from "./style.module.css";
 import Message from "./Message";
 import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
-import { setroomDetails } from "../../redux/ChatSlice";
-import { sortMessage } from "../../Utils";
+import { setroomDetails } from "redux/ChatSlice";
+import { sortMessage } from "Utils";
+import * as s from "./style.module.css";
 
 export default function Chat({ roomDetails }) {
   const [roomMessages, setroomMessages] = useState([]);
@@ -31,7 +31,7 @@ export default function Chat({ roomDetails }) {
     if (channelId) {
       db.collection("rooms")
         .doc(channelId)
-        .onSnapshot(snapshot => {
+        .onSnapshot((snapshot) => {
           dispatch(setroomDetails(snapshot.data()));
         });
     }
@@ -40,8 +40,8 @@ export default function Chat({ roomDetails }) {
     db.collection("rooms")
       .doc(channelId)
       .collection("messages")
-      .onSnapshot(snapshot => {
-        const messages = snapshot.docs.map(doc => ({
+      .onSnapshot((snapshot) => {
+        const messages = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
@@ -50,7 +50,7 @@ export default function Chat({ roomDetails }) {
         setchatLoading(false);
         scrollToBottom();
       });
-  }, [channelId]);
+  }, [channelId, dispatch]);
 
   return (
     <div className={s.chat_container}>
