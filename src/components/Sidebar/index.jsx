@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import "simplebar";
 import sidebarOptions from "data/SidebarOptions.js";
 import "simplebar/dist/simplebar.css";
-import dayjs from "dayjs";
 
 import SidebarItem from "./SidebarItem";
 import db from "../../firebase";
@@ -47,40 +46,6 @@ function Sidebar() {
     history.push(`/room/${e.target.id}`);
     //hide the sidebar in mobile viewport
     dispatch(setshowSidebar(false));
-    updateHistory(e.target);
-  };
-
-  const updateHistory = (targetEl) => {
-    const { innerText, id } = targetEl;
-    let updatedHistory;
-
-    //check if the history is already in the local storage
-    const history = JSON.parse(localStorage.getItem("history")) || [];
-    const isChannelInHistory = history.find((channel) => channel.id === id);
-
-    //if the channel is not in the history, add it to the history
-    if (!isChannelInHistory) {
-      const newHistory = [
-        { id, channel: innerText, time: dayjs().format("ll LT") },
-        ...history,
-      ];
-      updatedHistory = newHistory;
-    } else if (isChannelInHistory) {
-      //if it is in the history, move it to the top of the history
-      const otherHistoryItems = history.filter((channel) => channel.id !== id);
-      const newHistory = [
-        { id, channel: innerText, time: dayjs().format("ll LT") },
-        ...otherHistoryItems,
-      ];
-      updatedHistory = newHistory;
-    }
-
-    //if the history is more than 4, remove the last one
-    if (updatedHistory.length > 4) {
-      updatedHistory.pop();
-    }
-
-    localStorage.setItem("history", JSON.stringify(updatedHistory));
   };
 
   const toggleShowChannel = (e) => {

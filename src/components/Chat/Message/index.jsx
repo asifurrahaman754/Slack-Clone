@@ -7,15 +7,9 @@ import { useSelector } from "react-redux";
 import * as s from "./style.module.css";
 import db from "../../../firebase";
 
-export default function Message({
-  id,
-  user,
-  createdUserId,
-  userImage,
-  message,
-  timestamp,
-}) {
+export default function Message({ chat }) {
   const [showmsgOpList, setshowmsgOpList] = useState(false);
+  const { id, user, createdUserId, userImage, message, timestamp } = chat;
 
   return (
     <div className={s.message_wrap}>

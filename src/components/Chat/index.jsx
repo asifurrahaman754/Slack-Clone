@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import "simplebar";
 import "simplebar/dist/simplebar.css";
+import dayjs from "dayjs";
 
 import db from "../../firebase";
 import Message from "./Message";
@@ -24,6 +25,38 @@ export default function Chat({ roomDetails }) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const updateHistory = (roomName) => {
+    let updatedHistory;
+    //check if the history is already in the local storage
+    const history = JSON.parse(localStorage.getItem("history")) || [];
+    const isChannelInHistory = history.find(
+      (channel) => channel.id === channelId
+    );
+    const newHistory = {
+      id: channelId,
+      channel: roomName,
+      time: dayjs().format("ll LT"),
+    };
+
+    //if the channel is not in the history, add it to the history
+    if (!isChannelInHistory) {
+      updatedHistory = [newHistory, ...history];
+    } else if (isChannelInHistory) {
+      //if it is , move it to the top of the history
+      const otherHistoryItems = history.filter(
+        (channel) => channel.id !== channelId
+      );
+      updatedHistory = [newHistory, ...otherHistoryItems];
+    }
+
+    //if the history is more than 4, remove the last one
+    if (updatedHistory.length > 4) {
+      updatedHistory.pop();
+    }
+
+    localStorage.setItem("history", JSON.stringify(updatedHistory));
+  };
+
   useEffect(() => {
     setchatLoading(true);
 
@@ -33,6 +66,7 @@ export default function Chat({ roomDetails }) {
         .doc(channelId)
         .onSnapshot((snapshot) => {
           dispatch(setroomDetails(snapshot.data()));
+          updateHistory(snapshot.data().name);
         });
     }
 
@@ -63,19 +97,9 @@ export default function Chat({ roomDetails }) {
             <h4 className={s.no_msg}>There are no message in the room</h4>
           )}
 
-          {roomMessages.map(
-            ({ id, user, createdUserId, userImage, message, timestamp }) => (
-              <Message
-                key={id}
-                id={id}
-                createdUserId={createdUserId}
-                user={user}
-                userImage={userImage}
-                message={message}
-                timestamp={timestamp}
-              />
-            )
-          )}
+          {roomMessages.map((chat) => (
+            <Message key={chat.id} chat={chat} />
+          ))}
 
           <div ref={messagesEndRef} />
         </div>
